@@ -35,7 +35,9 @@ include ("lock.php");
                                         <?php
 
                                         include ("blocks/bd.php");
-                                        $result = mysql_query("SELECT title,id FROM categories",$db);
+                                        include ('model/Post.php');
+                                        $post = new Post();
+                                        $result = $post->getAllCategories();
 
                                         if (!$result) {
                                             echo "<p>Запрос на выборку данных из базы не прошел. Напишите об этом администратору admin@admin.com <br>

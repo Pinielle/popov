@@ -29,16 +29,29 @@
             <table width="690" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <!-- Podkluchaem left block site-->
-                    <?php include ("blocks/lefttd.php")
+                    <?php
+                        include ("blocks/lefttd.php");
+                        include ('model/Post.php');
                     ?>
                     <td valign="top">
                         <?php
                         if (isset($title) && isset($meta_d) && isset($meta_k) && isset($date) && isset($description) && isset($text) && isset($author) && isset($cat))
                         {
 
-                            $result = mysql_query ("
-                              INSERT INTO data (title, meta_d, meta_k, date, description,text,author,mini_img,cat)
-                                        VALUES ('$title', '$meta_d','$meta_k','$date','$description','$text','$author', 'some data', '$cat')");
+                            $post = new Post();
+                            $data = array(
+                                'title' => $title,
+                                'metaD' => $meta_d,
+                                'metaK' => $meta_k,
+                                'date' => $date,
+                                'shortDescription' => $description,
+                                'description' => $text,
+                                'author' => $author,
+                                'category' => $cat
+                            );
+                            $post->setData($data);
+
+                            $result = $post->save();
 
                             if ($result == 'true') {echo "<p>Заметка успешно добавленна</p>";}
                             else {echo "<p>Заметка не добавленна !</p>";}
